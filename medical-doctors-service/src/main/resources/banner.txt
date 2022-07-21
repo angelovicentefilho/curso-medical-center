@@ -1,0 +1,15 @@
+${Ansi.GREEN}
+${Ansi.GREEN}
+${Ansi.GREEN}
+${Ansi.GREEN}
+${Ansi.GREEN}  _____             _                    _____                 _
+${Ansi.GREEN} |  __ \           | |                  / ____|               (_)
+${Ansi.GREEN} | |  | | ___   ___| |_ ___  _ __ ___  | (___   ___ _ ____   ___  ___ ___
+${Ansi.GREEN} | |  | |/ _ \ / __| __/ _ \| '__/ __|  \___ \ / _ \ '__\ \ / / |/ __/ _ \
+${Ansi.GREEN} | |__| | (_) | (__| || (_) | |  \__ \  ____) |  __/ |   \ V /| | (_|  __/
+${Ansi.GREEN} |_____/ \___/ \___|\__\___/|_|  |___/ |_____/ \___|_|    \_/ |_|\___\___|
+${Ansi.GREEN}
+${Ansi.GREEN}
+${Ansi.GREEN}
+${Ansi.RED} :: Medical Center v${application.version} :: Powered By: Spring Boot${spring-boot.formatted-version} :: \o/
+${Ansi.DEFAULT}

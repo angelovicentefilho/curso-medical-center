@@ -1,0 +1,30 @@
+spring:
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+  config:
+    import: configserver:http://localhost:8888
+  application:
+    name: doctors-service
+  profiles:
+    active: dev
+
+server:
+  port: ${PORT:0}
+  forward-headers-strategy: framework
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka
+logging:
+  file:
+    name: ./logs/${spring.application.name}.log
+

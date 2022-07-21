@@ -1,0 +1,13 @@
+banners.txt${Ansi.GREEN}
+${Ansi.GREEN}
+${Ansi.GREEN}   _____             __ _          _____
+${Ansi.GREEN}  / ____|           / _(_)        / ____|
+${Ansi.GREEN} | |     ___  _ __ | |_ _  __ _  | (___   ___ _ ____   _____ _ __
+${Ansi.GREEN} | |    / _ \| '_ \|  _| |/ _` |  \___ \ / _ \ '__\ \ / / _ \ '__|
+${Ansi.GREEN} | |___| (_) | | | | | | | (_| |  ____) |  __/ |   \ V /  __/ |
+${Ansi.GREEN}  \_____\___/|_| |_|_| |_|\__, | |_____/ \___|_|    \_/ \___|_|
+${Ansi.GREEN}                           __/ |
+${Ansi.GREEN}                          |___/
+${Ansi.GREEN}
+${Ansi.RED} :: Medical Center v${application.version} :: Powered By: Spring Boot${spring-boot.formatted-version} :: \o/
+${Ansi.DEFAULT}

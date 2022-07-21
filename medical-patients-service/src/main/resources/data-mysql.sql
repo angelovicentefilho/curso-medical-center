@@ -1,0 +1,12 @@
+INSERT INTO patients (patient_id, username, password, age, name, phone) VALUES ('99C3710ADDD04CF9B2038CBDE2736B94','user1', '123',  20, 'Paciente 1', '4855555555');
+INSERT INTO patients (patient_id, username, password, age, name, phone) VALUES ('99C3710ADDD04CF9B2038CBDE2736B95','user2', '123',  35, 'Paciente 2', '4855555551');
+INSERT INTO patients (patient_id, username, password, age, name, phone) VALUES ('99C3710ADDD04CF9B2038CBDE2736B96','user3', '123',  60, 'Paciente 3', '4855555552');
+INSERT INTO patients (patient_id, username, password, age, name, phone) VALUES ('99C3710ADDD04CF9B2038CBDE2736B97','user4', '123',  70, 'Paciente 4', '4855555553');
+
+INSERT INTO roles (role_id, name) VALUES ('6663710ADDD04CF9B2038CBDE2736R01', 'ROLE_PATIENT');
+INSERT INTO roles (role_id, name) VALUES ('6663710ADDD04CF9B2038CBDE2736R02', 'ROLE_ADMIN');
+
+INSERT INTO patients_has_roles (patient_id, role_id) VALUES ('99C3710ADDD04CF9B2038CBDE2736B94', '6663710ADDD04CF9B2038CBDE2736R01');
+INSERT INTO patients_has_roles (patient_id, role_id) VALUES ('99C3710ADDD04CF9B2038CBDE2736B95', '6663710ADDD04CF9B2038CBDE2736R01');
+INSERT INTO patients_has_roles (patient_id, role_id) VALUES ('99C3710ADDD04CF9B2038CBDE2736B96', '6663710ADDD04CF9B2038CBDE2736R01');
+INSERT INTO patients_has_roles (patient_id, role_id) VALUES ('99C3710ADDD04CF9B2038CBDE2736B97', '6663710ADDD04CF9B2038CBDE2736R02');
