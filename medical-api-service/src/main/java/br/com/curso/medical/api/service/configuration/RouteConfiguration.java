@@ -17,6 +17,8 @@ public class RouteConfiguration {
         return builder
                 .routes()
                 .route(r -> r.path("/v1/doctors/**").uri("lb://doctors-service"))
+                .route(r -> r.path("/v1/patients/**").uri("lb://patients-service"))
+                .route(r -> r.path("/v1/schedulers/**").uri("lb://scheduling-service"))
                 .build();
     }
 }

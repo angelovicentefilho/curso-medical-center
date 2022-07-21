@@ -10,6 +10,8 @@ import br.com.curso.medical.scheduling.webclient.DoctorWebClient;
 import br.com.curso.medical.scheduling.webclient.PatientWebClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,8 +27,9 @@ public class SchedulingCommandServiceImpl implements SchedulingCommandService {
     private final DoctorWebClient doctorWebClient;
     private final PatientWebClient patientWebClient;
 
+    @CacheEvict(cacheNames = Scheduling.CACHE_NAME, allEntries = true)
     @Override
-    public Scheduling toSchedule(Scheduling scheduling) {
+    public Scheduling toSchedule(final Scheduling scheduling) {
         log.info(">>> Scheduling patient '{}' for doctor '{}' at: '{}'", scheduling.getPatientId(), scheduling.getDoctorId(), Dates.format(scheduling.getDate()));
         scheduling.setScheduleId(GenId.id());
         log.info("::: Search by doctor on doctors-service :::");

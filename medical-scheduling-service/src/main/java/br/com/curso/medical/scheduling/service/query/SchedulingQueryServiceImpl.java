@@ -7,6 +7,7 @@ import br.com.curso.medical.scheduling.queries.FindByPatientIdQuery;
 import br.com.curso.medical.scheduling.repository.SchedulingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -23,24 +24,27 @@ public class SchedulingQueryServiceImpl implements SchedulingQueryService {
 
     private final SchedulingRepository repository;
 
+    @Cacheable(cacheNames = Scheduling.CACHE_NAME, unless = "#result == null", key = "#query.getDoctorId()")
     @Override
-    public Set<Scheduling> findByDoctorId(FindByDoctorIdQuery query) {
+    public Set<Scheduling> findByDoctorId(final FindByDoctorIdQuery query) {
         log.info(">>> find schedule for doctor: '{}'", query.getDoctorId());
         var doctor = this.repository.findByDoctorId(query.getDoctorId());
         log.info("<<< schedule found!");
         return doctor;
     }
 
+    @Cacheable(cacheNames = Scheduling.CACHE_NAME, unless = "#result == null", key = "#query.getPatientId()")
     @Override
-    public Set<Scheduling> findByPatientId(FindByPatientIdQuery query) {
+    public Set<Scheduling> findByPatientId(final FindByPatientIdQuery query) {
         log.info(">>> find schedule for patient: '{}'", query.getPatientId());
         var patient = this.repository.findByPatientId(query.getPatientId());
         log.info("<<< schedule found!");
         return patient;
     }
 
+    @Cacheable(cacheNames = Scheduling.CACHE_NAME, unless = "#result == null")
     @Override
-    public Set<Scheduling> findAll(FindAllQuery query) {
+    public Set<Scheduling> findAll(final FindAllQuery query) {
         log.info(">>> find all schedulers");
         var schedulers = new HashSet<>(this.repository.findAll());
         log.info("<<< schedules found!");

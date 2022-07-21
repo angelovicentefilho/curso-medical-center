@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Scheduling {
+public class Scheduling implements Serializable {
     @Id
     @Basic(optional = false)
     private String scheduleId;
@@ -26,4 +27,6 @@ public class Scheduling {
     private String doctorId;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+
+    public static final String CACHE_NAME = "SCHEDULING";
 }
