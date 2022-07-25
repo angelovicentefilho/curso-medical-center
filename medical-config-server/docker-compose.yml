@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  course-mc-configserver:
+    container_name: config-server
+    hostname: configserver
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - course-medical-center
+networks:
+  course-medical-center:
