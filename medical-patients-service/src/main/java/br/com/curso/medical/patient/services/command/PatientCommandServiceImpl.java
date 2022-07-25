@@ -12,6 +12,8 @@ import br.com.curso.medical.patient.services.query.PatientQueryService;
 import br.com.curso.medical.patient.entities.Roles;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ public class PatientCommandServiceImpl implements PatientCommandService {
     private final PasswordEncoder encoder;
     private final PatientQueryService queryService;
 
+    @CachePut(cacheNames = Patient.CACHE_NAME, key = "#command.getPatientId()", unless = "#result == null")
     @Override
     public Optional<Patient> update(UpdatePatientCommand command) {
         var patient = queryService.findById(new FindByPatientIdQuery(command.getPatientId()));
@@ -53,6 +56,7 @@ public class PatientCommandServiceImpl implements PatientCommandService {
         }
     }
 
+    @CacheEvict(cacheNames = Patient.CACHE_NAME, key = "#command.getPatientId()")
     @Override
     public void delete(DeletePatientCommand command) {
         var patient = queryService.findById(new FindByPatientIdQuery(command.getPatientId()));
@@ -61,6 +65,7 @@ public class PatientCommandServiceImpl implements PatientCommandService {
         }
     }
 
+    @CacheEvict(cacheNames = Patient.CACHE_NAME, key = "#command.getPatientId()", allEntries = true)
     @Override
     public Optional<Patient> save(CreatePatientCommand command) {
         var patient = Codec.toPatient(command);

@@ -37,4 +37,6 @@ public class Patient implements Serializable {
     )
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    public static final String CACHE_NAME = "PATIENT";
 }
