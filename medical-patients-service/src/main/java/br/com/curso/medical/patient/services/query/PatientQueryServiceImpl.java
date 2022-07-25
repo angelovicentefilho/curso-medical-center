@@ -4,7 +4,6 @@ import br.com.curso.medical.patient.entities.Patient;
 import br.com.curso.medical.patient.queries.FindAllQuery;
 import br.com.curso.medical.patient.queries.FindByPatientIdQuery;
 import br.com.curso.medical.patient.repository.PatientRepository;
-import br.com.curso.medical.patient.services.query.PatientQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
