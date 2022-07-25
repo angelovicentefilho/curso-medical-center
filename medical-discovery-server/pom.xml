@@ -6,6 +6,7 @@
         <groupId>br.com.curso</groupId>
         <artifactId>medical-center</artifactId>
         <version>1.0.0</version>
+        <relativePath />
     </parent>
 
     <artifactId>medical-discovery-server</artifactId>
