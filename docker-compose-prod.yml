@@ -1,0 +1,9 @@
+version: '3.4'
+
+x-database-config-data:
+  &mysql-connection-data
+  environment:
+    MYSQL_USER: "root"
+    MYSQL_PASSWORD: "root"
+    MYSQL_DATABASE: ""
+    MYSQL_ROOT_PASSWORD: root

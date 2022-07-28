@@ -1,0 +1,61 @@
+version: '3.4'
+
+x-database-config-data:
+  &mysql-connection-data
+  environment:
+    MYSQL_USER: "root"
+    MYSQL_PASSWORD: "root"
+    MYSQL_DATABASE: "db_medical_center_app"
+    MYSQL_ROOT_PASSWORD: root
+x-database-user-data:
+  &mongo-connection-data
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: root
+        MONGO_INITDB_DATABASE: "db_medical_center_app_user"
+        MONGODB_USERNAME: "root"
+        MONGODB_PASSWORD: "root"
+x-config-server:
+  &spring-config
+    environment:
+    - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
+
+services:
+  medical-center-config-server:
+    build:
+      context: ./medical-config-server
+      dockerfile: ./Dockerfile
+    image: medical-center-config-server
+    ports:
+    - "8888:8888"
+    container_name: medical-center-config-server
+  medical-center-service-discovery:
+    build:
+      context: ./medical-discovery-server
+      dockerfile: ./Dockerfile
+    image: medical-center-service-discovery
+    ports:
+    - 8761:8761
+    <<: *spring-config
+    depends_on:
+    - medical-center-config-server
+    container_name: medical-center-service-discovery
+  medical-center-api-gateway:
+    build:
+      context: ./medical-api-service
+      dockerfile: ./Dockerfile
+    image: medical-center-api-gateway
+    environment:
+      - EUREKA_USER=admin
+      - EUREKA_PASS=admin
+      - EUREKA_SERVER=medical-center-service-discovery
+      - EUREKA_PORT=8761
+      - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
+    ports:
+      - 8085:8085
+    <<: *spring-config
+    depends_on:
+      - medical-center-config-server
+      - medical-center-service-discovery
+    container_name: medical-center-api-gateway
+    

@@ -1,5 +1,5 @@
 FROM openjdk:11.0.7-jre-slim
 WORKDIR /app
-COPY ./target/*.jar ./app.jar
+COPY ./target/medical-discovery-server-*.jar ./service-discovery.jar
 EXPOSE 8761
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "service-discovery.jar"]

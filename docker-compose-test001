@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  discovery-service:
+    container_name: discovery-service
+    hostname: discovery-service
+    build:
+      context: ./medical-discovery-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - course-medical-center
+  config-server:
+    container_name: config-server
+    hostname: config-server
+    build:
+      context: ./medical-config-server
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - course-medical-center
+  api-gateway:
+    container_name: api-gateway
+    hostname: api-gateway
+    build:
+      context: ./medical-api-service
+      dockerfile: Dockerfile
+    ports:
+      - "8050:8050"
+    environment:
+      - "CONFIG_SERVER=config-server"
+networks:
+  course-medical-center:
