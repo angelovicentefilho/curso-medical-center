@@ -1,17 +1,17 @@
 spring:
   redis:
     database: 0
-    host: localhost
-    port: 6379
-    password: root
+    host: ${REDIS_SERVER:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASS:root}
   config:
-    import: configserver:http://localhost:8888
+    import: configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
   application:
     name: patients-service
   profiles:
     active: dev
   zipkin:
-    base-url: http://localhost:9411
+    base-url: ${ZIPKIN_SERVER_URI:http://localhost:9411}
   sleuth:
     sampler:
       probability: 1.0
@@ -27,7 +27,7 @@ management:
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@localhost:8761/eureka
+      defaultZone: http://${EUREKA_USER:admin}:${EUREKA_PASS:admin}@${EUREKA_SERVER:localhost}:${EUREKA_PORT:8761}/eureka
 logging:
   file:
     name: ./logs/${spring.application.name}.log

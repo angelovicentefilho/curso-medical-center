@@ -1,25 +1,5 @@
 version: '3.4'
 
-x-database-config-data:
-  &mysql-connection-data
-  environment:
-    MYSQL_USER: "root"
-    MYSQL_PASSWORD: "root"
-    MYSQL_DATABASE: "db_medical_center_app"
-    MYSQL_ROOT_PASSWORD: root
-x-database-user-data:
-  &mongo-connection-data
-    environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: root
-        MONGO_INITDB_DATABASE: "db_medical_center_app_user"
-        MONGODB_USERNAME: "root"
-        MONGODB_PASSWORD: "root"
-x-config-server:
-  &spring-config
-    environment:
-    - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
-
 services:
   medical-center-config-server:
     build:
@@ -51,7 +31,7 @@ services:
       - EUREKA_PORT=8761
       - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
     ports:
-      - 8085:8085
+      - 8050:8050
     depends_on:
       - medical-center-config-server
       - medical-center-service-discovery
@@ -76,4 +56,45 @@ services:
       - medical-center-service-discovery
       - medical-center-api-gateway
     container_name: medical-center-doctors-service
+  medical-center-patients-service:
+    build:
+      context: ./medical-patients-service
+      dockerfile: ./Dockerfile
+    image: medical-center-patients-service
+    environment:
+      - EUREKA_USER=admin
+      - EUREKA_PASS=admin
+      - EUREKA_SERVER=medical-center-service-discovery
+      - EUREKA_PORT=8761
+      - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
+      - ZIPKIN_SERVER_URI=http://localhost:9411
+      - REDIS_SERVER=localhost
+      - REDIS_PORT=6379
+      - REDIS_PASS=root
+    depends_on:
+      - medical-center-config-server
+      - medical-center-service-discovery
+      - medical-center-api-gateway
+    container_name: medical-center-patients-service
+  medical-center-scheduling-service:
+    build:
+      context: ./medical-scheduling-service
+      dockerfile: ./Dockerfile
+    image: medical-center-scheduling-service
+    environment:
+      - EUREKA_USER=admin
+      - EUREKA_PASS=admin
+      - EUREKA_SERVER=medical-center-service-discovery
+      - EUREKA_PORT=8761
+      - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
+      - ZIPKIN_SERVER_URI=http://localhost:9411
+      - REDIS_SERVER=localhost
+      - REDIS_PORT=6379
+      - REDIS_PASS=root
+    depends_on:
+      - medical-center-config-server
+      - medical-center-service-discovery
+      - medical-center-api-gateway
+    container_name: medical-center-scheduling-service
+  
   
