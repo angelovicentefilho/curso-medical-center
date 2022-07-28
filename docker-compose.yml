@@ -36,7 +36,6 @@ services:
     image: medical-center-service-discovery
     ports:
     - 8761:8761
-    <<: *spring-config
     depends_on:
     - medical-center-config-server
     container_name: medical-center-service-discovery
@@ -53,9 +52,28 @@ services:
       - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
     ports:
       - 8085:8085
-    <<: *spring-config
     depends_on:
       - medical-center-config-server
       - medical-center-service-discovery
     container_name: medical-center-api-gateway
-    
+  medical-center-doctors-service:
+    build:
+      context: ./medical-doctors-service
+      dockerfile: ./Dockerfile
+    image: medical-center-doctors-service
+    environment:
+      - EUREKA_USER=admin
+      - EUREKA_PASS=admin
+      - EUREKA_SERVER=medical-center-service-discovery
+      - EUREKA_PORT=8761
+      - SPRING_CLOUD_CONFIG_URI=http://medical-center-config-server:8888
+      - ZIPKIN_SERVER_URI=http://localhost:9411
+      - REDIS_SERVER=localhost
+      - REDIS_PORT=6379
+      - REDIS_PASS=root
+    depends_on:
+      - medical-center-config-server
+      - medical-center-service-discovery
+      - medical-center-api-gateway
+    container_name: medical-center-doctors-service
+  
